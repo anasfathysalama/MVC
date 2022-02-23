@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers ;
+namespace App\Controllers;
 
 class PostController
 {
-    public function index()
+    public function index(): void
     {
         echo "from index method for post controller";
     }

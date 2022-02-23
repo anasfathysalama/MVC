@@ -2,9 +2,7 @@
 
 namespace Core;
 
-//require '../Exceptions/MethodNotFoundException.php';
-//require '../Exceptions/ClassNotFoundException.php';
-//require '../Exceptions/RouteNotFoundException.php';
+use App\Controllers\HomeController;
 
 class Router
 {
@@ -13,128 +11,78 @@ class Router
      * contain all routes
      * @var array
      */
-    private array $routes = [];
-
-
-    /**
-     * contain rout parameters
-     * @var array
-     */
-    private array $params = [];
-
+    public static array $routes = [];
+    public Request $request;
+    public Response $response;
 
     /**
-     * add new route to $routs array
-     * @param string $route the url route
-     * @param array $params contain [contrller , action]
+     * @param Request $request
+     * @param Response $response
      */
-    public function add(string $route, array $params): void
+    public function __construct(Request $request, Response $response)
     {
-        $processedRoute = strpos($route, "/") === 0 ? $route : "/" . $route;
-        $this->routes[$processedRoute] = $params;
+        $this->request = $request;
+        $this->response = $response;
+    }
 
+    /**
+     * @param $route
+     * @param $action
+     */
+    public static function get($route, $action): void
+    {
+        $route = self::handelPath($route);
+        self::$routes['get'][$route] = $action;
+    }
+
+    /**
+     * @param $route
+     * @param $action
+     */
+    public static function post($route, $action): void
+    {
+        $route = self::handelPath($route);
+        self::$routes['post'][$route] = $action;
     }
 
 
     /**
-     * @param string $url
-     * @return bool
+     *    - dispatch the action of the url
      */
-    public function match(string $url): bool
+    public function dispatch(): void
     {
-        foreach ($this->routes as $route => $params) {
-            if ($url === $route || strlen($url) === 0) {
-                $this->params = $params;
-                return true;
-            }
+        $path = $this->request->path();
+        $method = $this->request->methodType();
+        $action = self::$routes[$method][$path] ?? false;
+
+        if (!$action) {
+            // 404 handling
         }
-        return false;
-    }
 
-    /**
-     * get all routes
-     * @return array
-     */
-    public function getRoutes(): array
-    {
-        return $this->routes;
-    }
+        // callback
+        if ($action instanceof \Closure) {
+            call_user_func_array($action, []);
+        }
 
-    /**
-     * @return array
-     */
-    public function getParams(): array
-    {
-        return $this->params;
-    }
-
-
-    /**
-     * @param $url
-     * @return void
-     */
-    public function dispatch($url): void
-    {
-        $url = $this->removeUrlQueryStringVariables($url);
-        if ($this->match($url)) {
-            [$controller, $action] = $this->extractClassAndMethod($url);
-            $className = "App\Controllers\\" . $this->handelClassName($controller);
-            if (class_exists($className)) {
-                $classObject = new $className();
-                if (method_exists($classObject, $action)) {
-                    call_user_func_array([$classObject, $action], []);
+        // array
+        if (is_array($action)) {
+            if (class_exists($action[0])) {
+                if (method_exists($action[0], $action[1])) {
+                    call_user_func_array([new $action[0], $action[1]], []);
                 } else {
-//                    throw new MethodNotFoundException();
-                    echo "method {$action} not found in class {$className}";
+                    echo "method {$action[1]} does not exist in {$action[0]}";
                 }
             } else {
-                echo "class {$className} not found";
-//                throw new ClassNotFoundException();
+                echo "class {$action[0]} not found";
             }
-        } else {
-            echo "404 not found";
-//            throw new RouteNotFoundException();
+
         }
     }
 
-    /**
-     * @param $controller
-     * @return array|string|string[]
-     */
-    private function handelClassName($controller)
+    protected static function handelPath(string $route): string
     {
-        return str_replace(' ', '', ucwords($controller));
+        return strpos($route, "/") === 0 ? $route : "/" . $route;
     }
 
-    /**
-     * @param $url
-     * @return array
-     */
-    private function extractClassAndMethod($url): array
-    {
-        if (strlen($url) === 0) {
-            $url = "/";
-        }
-        return [
-            $this->routes[$url]['controller'] ?? $this->routes[$url][0],
-            $this->routes[$url]['action'] ?? $this->routes[$url][1]
-        ];
-    }
-
-    /**
-     * @param $url
-     * @return mixed|string|void
-     */
-    protected function removeUrlQueryStringVariables($url)
-    {
-        if ($url !== '') {
-            $parts = explode("&", $url);
-            $url = '';
-            if (strpos($parts[0], '=') === false) {
-                $url = $parts[0];
-            }
-            return $url;
-        }
-    }
 
 }

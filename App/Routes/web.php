@@ -1,8 +1,7 @@
 <?php
 
-require '../../Core/Router.php';
+use App\Controllers\HomeController;
+use Core\Router;
 
-$router = new Router;
-$router->add('', ['controller' => 'Home', 'action' => 'index']);
-$router->add('/posts', ['controller' => 'Post controller', 'action' => 'index']);
-$router->add('/posts/create', ['controller' => 'Postcontroller', 'action' => 'create']);
+Router::get('/', [HomeController::class, 'index']);
+
