@@ -1,0 +1,14 @@
+{
+    "name": "mvc/anas",
+    "authors": [
+        {
+            "name": "anas"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "anas\\" : "./"
+        }
+    }
+}

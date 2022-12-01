@@ -1,0 +1,4 @@
+RewriteEngine on
+#RewriteCond $1 !^(index\.php|images|robots\.txt)
+RewriteCond %{ENV:REDIRECT_STATUS} ^$
+RewriteRule ^(.*)$ public/index.php/$1 [L]
