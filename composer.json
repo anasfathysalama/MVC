@@ -5,10 +5,12 @@
             "name": "anas"
         }
     ],
-    "require": {},
     "autoload": {
         "psr-4": {
             "anas\\" : "./"
         }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.4"
     }
 }
