@@ -4,8 +4,8 @@ namespace anas\core;
 
 class Response
 {
-    public function setStatusCode()
+    public function setStatusCode($code)
     {
-        http_response_code(404);
+        http_response_code($code);
     }
 }
