@@ -6,15 +6,19 @@ class Application
 {
 
     public Router $route;
-    public Request $request;
+    public static string $APP_PATH;
 
-    public function __construct()
+    public function __construct($applicationPath)
     {
         $this->route = new Router();
-        $this->request = new Request();
+        self::$APP_PATH = $applicationPath;
     }
 
-    public function run()
+    /**
+     * @return void
+     * @throws Exceptions\NotFoundRouteException
+     */
+    public function run(): void
     {
         $this->route->resolve();
     }

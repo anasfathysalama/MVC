@@ -37,14 +37,20 @@ class Router
         $method = $this->request->getMethod();
         $action = $this->routes[$method][$path] ?? false;
 
-        if($action === false){
-            throw new NotFoundRouteException('Route Not Found') ;
+        if ($action === false) {
+            throw new NotFoundRouteException('Route Not Found');
         }
 
-        if($action instanceof \Closure){
-           call_user_func($action);
+        if ($action instanceof \Closure) {
+            return $action();
+        }
+
+        if (is_string($action)) {
+            return View::make($action);
         }
     }
+
+
 
 
 }

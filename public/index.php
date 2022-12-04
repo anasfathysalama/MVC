@@ -1,21 +1,20 @@
 <?php
-require __DIR__ .'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 
 use anas\core\Application;
+use anas\core\View;
 
 
+$app = new Application(dirname(__DIR__));
 
-$app = new Application();
-
-$app->route->get('/' , function (){
-    echo 'Home';
-});
-$app->route->get('/users' , function (){
+$app->route->get('/', 'home');
+$app->route->get('/users', function () {
     echo 'users';
 });
-$app->route->get('/contact' , function (){
+$app->route->get('/contact', function () {
     echo 'contact';
 });
+$app->route->get('/about', 'about');
 
 $app->run();
