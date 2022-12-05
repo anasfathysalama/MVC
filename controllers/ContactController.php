@@ -20,7 +20,7 @@ class ContactController
 
     public function store(Request $request)
     {
-        dump($request->getBody());
+        dump($request->all());
         echo "handling from controller";
     }
 }

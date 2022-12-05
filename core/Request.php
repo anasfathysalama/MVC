@@ -6,7 +6,22 @@ class Request
 {
 
 
-    public function getPath()
+    /**
+     * @var array
+     */
+    private array $body;
+
+
+    public function __construct()
+    {
+        $this->body = [];
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
         $position = strpos($path, '?');
@@ -24,20 +39,44 @@ class Request
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
-    public function getBody()
+    /**
+     * @return array
+     */
+    public function all(): array
     {
-        $body = [];
         if ($this->getMethod() === "get") {
             foreach ($_GET as $key => $value) {
-                $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                $this->body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
         if ($this->getMethod() === "post") {
             foreach ($_POST as $key => $value) {
-                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                $this->body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
-        return $body;
+        return $this->body;
+    }
+
+
+    /**
+     * @param $key
+     * @param string $default
+     * @return string
+     */
+    public function get($key, string $default = ''): string
+    {
+        $this->all();
+        return $this->body[$key] !== '' ? $this->body[$key] : $default;
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function filled($key): bool
+    {
+        $this->all();
+        return isset($this->body[$key]) && $this->body[$key] !== '';
     }
 
 }
