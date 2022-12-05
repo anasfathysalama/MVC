@@ -1,9 +1,9 @@
 <?php
 
-use anas\controllers\ContactController;
-use anas\controllers\HomeController;
-use anas\controllers\LoginController;
-use anas\controllers\RegisterController;
+use anas\app\controllers\ContactController;
+use anas\app\controllers\HomeController;
+use anas\app\controllers\LoginController;
+use anas\app\controllers\RegisterController;
 use anas\core\Application;
 
 

@@ -2,7 +2,7 @@
 
 namespace anas\core;
 
-use anas\core\Exceptions\NotFoundRouteException;
+use anas\app\Exceptions\NotFoundRouteException;
 
 class Router
 {

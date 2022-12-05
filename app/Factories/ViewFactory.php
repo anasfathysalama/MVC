@@ -1,6 +1,6 @@
 <?php
 
-namespace anas\Factories;
+namespace anas\app\Factories;
 
 use anas\core\View;
 

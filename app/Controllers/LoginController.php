@@ -1,22 +1,17 @@
 <?php
 
-namespace anas\controllers;
+namespace anas\app\controllers;
 
 use anas\core\Request;
 use anas\core\View;
 
-class ContactController
+class LoginController
 {
-    protected Request $request ;
-    public function __construct()
-    {
-        $this->request = new Request();
-    }
-
     public function index()
     {
-        echo View::make('contact');
+        echo View::make('auth/login');
     }
+
 
     public function store(Request $request)
     {

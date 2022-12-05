@@ -1,6 +1,6 @@
 <?php
 
-namespace anas\controllers;
+namespace anas\app\controllers;
 
 use anas\core\View;
 
