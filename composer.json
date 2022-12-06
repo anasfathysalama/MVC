@@ -1,16 +1,19 @@
 {
-    "name": "mvc/anas",
-    "authors": [
-        {
-            "name": "anas"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "anas\\" : "./"
-        }
-    },
-    "require-dev": {
-        "symfony/var-dumper": "^5.4"
+  "name": "mvc/anas",
+  "authors": [
+    {
+      "name": "anas"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "anas\\": "./"
+    },
+    "files": [
+      "./app/Helpers/helper.php"
+    ]
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^5.4"
+  }
 }
