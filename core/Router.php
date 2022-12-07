@@ -58,6 +58,16 @@ class Router
             return $action();
         }
 
+        $this->handleArrayAction($action);
+    }
+
+
+    /**
+     * @param $action
+     * @return void
+     */
+    private function handleArrayAction($action): void
+    {
         if (is_array($action)) {
             [$class, $method] = $action;
             if (class_exists($class)) {
