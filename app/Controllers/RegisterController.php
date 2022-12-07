@@ -2,10 +2,6 @@
 
 namespace anas\app\controllers;
 
-use anas\app\Validation\Rules\BetweenRule;
-use anas\app\Validation\Rules\MinRule;
-use anas\app\Validation\Rules\RequiredRule;
-use anas\app\Validation\Rules\MaxRule;
 use anas\app\Validation\Validation;
 use anas\core\Request;
 use anas\core\View;
