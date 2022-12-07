@@ -89,4 +89,4 @@ parameter, and it's coming fromm `ErrorBag.php` class
 Create views in `views` directory in the root directory and pass it`s pass to ``View::make('home')`` you will need
 to ``echo`` view to render it.
 
-----
+
