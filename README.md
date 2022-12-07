@@ -94,6 +94,6 @@ parameter, and it's coming fromm `ErrorBag.php` class
 #### Views
 
 Create views in `views` directory in the root directory and pass it`s pass to ``View::make('home')`` you will need
-to ``echo`` view to render it.
+to ```echo``` view to render it.
 
 
