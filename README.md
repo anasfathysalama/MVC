@@ -63,15 +63,22 @@ and insure your rule extend abstract class inside `Rule\Contracts\Rule.php` and 
 
 **To apply validation in any request** 
 
-- first define instance of Validation.php class and pass your rules as an array to it`s constructor
+**first** define instance of Validation.php class and pass your rules as an array to it`s constructor
 
 ```  
  $validation = new Validation([
       'first_name' => ['required', 'between:3,6'],
  ]);
 ```
+also can pass instance of  Rules  
 
-- second pass your data to `` validate() `` method.
+```  
+ $validation = new Validation([
+      'first_name' => [new RequiredRule, new BetweenRule(3,6)],
+ ]);
+```
+
+**second** pass your data to `` validate() `` method.
 ```
  $validation->validate([
       'first_name' => $request->get('first_name'),
