@@ -2,7 +2,6 @@
 
 namespace anas\core;
 
-use anas\Factories\ViewFactory;
 
 class View
 {
