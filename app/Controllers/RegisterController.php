@@ -30,7 +30,7 @@ class RegisterController
             dump($request->all());
         } else {
             // validation errors
-            dump($validation->errors());
+             dump($validation->errors());
         }
 
     }
